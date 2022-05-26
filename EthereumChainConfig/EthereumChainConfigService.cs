@@ -10,7 +10,7 @@ namespace NokitaKaze.EthereumChainConfig
 {
     public class EthereumChainConfigService
     {
-        public const string DefaultTornadoConfigFilename = "tornado-config.json";
+        public const string DefaultTornadoConfigFilename = "default-ethereum-config.json";
         public const int ETHEREUM_ID = 1;
 
         public const int ROPSTEN_ID = 3;
@@ -47,7 +47,11 @@ namespace NokitaKaze.EthereumChainConfig
 
         public static EthereumChainConfigService CreateConfigFromFile(string filename)
         {
-            // todo check file
+            if (!File.Exists(filename))
+            {
+                throw new Exception("Config ethereum file " + filename + " not found");
+            }
+
             var jsonText = File.ReadAllText(filename);
 
             return CreateConfigFromJson(jsonText);
@@ -56,13 +60,21 @@ namespace NokitaKaze.EthereumChainConfig
         public static EthereumChainConfigService CreateConfigFromDefaultFile()
         {
             var filename = Path.Combine(AppContext.BaseDirectory, DefaultTornadoConfigFilename);
+            if (!File.Exists(filename))
+            {
+                throw new Exception("Can not find default config named " + DefaultTornadoConfigFilename);
+            }
 
             return CreateConfigFromFile(filename);
         }
 
         public static async Task<EthereumChainConfigService> CreateConfigFromFileAsync(string filename)
         {
-            // todo check file
+            if (!File.Exists(filename))
+            {
+                throw new Exception("Config ethereum file " + filename + " not found");
+            }
+
             var jsonText = await File.ReadAllTextAsync(filename);
 
             return CreateConfigFromJson(jsonText);
@@ -71,6 +83,10 @@ namespace NokitaKaze.EthereumChainConfig
         public static Task<EthereumChainConfigService> CreateConfigFromDefaultFileAsync()
         {
             var filename = Path.Combine(AppContext.BaseDirectory, DefaultTornadoConfigFilename);
+            if (!File.Exists(filename))
+            {
+                throw new Exception("Can not find default config named " + DefaultTornadoConfigFilename);
+            }
 
             return CreateConfigFromFileAsync(filename);
         }
