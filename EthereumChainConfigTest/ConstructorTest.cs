@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Reflection;
-using NokitaKaze.EthereumChainConfig;
 using NokitaKaze.EthereumChainConfig.Models;
 using Xunit;
 
-namespace EthereumChainConfigTest
+namespace NokitaKaze.EthereumChainConfig.Test
 {
     public class ConstructorTest
     {

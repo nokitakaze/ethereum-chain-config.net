@@ -4,6 +4,10 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <AssemblyName>NokitaKaze.EthereumChainConfig.Test</AssemblyName>
+
+        <RootNamespace>NokitaKaze.EthereumChainConfig.Test</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
