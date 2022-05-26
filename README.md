@@ -1,4 +1,4 @@
-Tornado Cash Encrypted Note.Net: Cypher/Decypher
+Ethereum Chain Config
 ===========
 [![Build status](https://ci.appveyor.com/api/projects/status/3klbulfalr5w24f6?svg=true)](https://ci.appveyor.com/project/nokitakaze/ethereum-chain-config-net)
 [![Test status](https://img.shields.io/appveyor/tests/nokitakaze/ethereum-chain-config-net)](https://ci.appveyor.com/project/nokitakaze/ethereum-chain-config-net/branch/master)

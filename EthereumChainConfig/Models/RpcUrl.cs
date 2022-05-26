@@ -9,9 +9,9 @@ namespace NokitaKaze.EthereumChainConfig.Models
     public class RpcUrl
     {
         [JsonInclude]
-        public string name { get; private set; }
+        public string name { get; private set; } = string.Empty;
 
         [JsonInclude]
-        public string url { get; private set; }
+        public string url { get; private set; } = string.Empty;
     }
 }

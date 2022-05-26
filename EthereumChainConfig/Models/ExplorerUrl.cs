@@ -13,19 +13,19 @@ namespace NokitaKaze.EthereumChainConfig.Models
         /// Transaction prefix URL
         /// </summary>
         [JsonInclude]
-        public string tx { get; private set; }
+        public string tx { get; private set; } = string.Empty;
 
         /// <summary>
         /// Address prefix URL
         /// </summary>
         [JsonInclude]
-        public string address { get; private set; }
+        public string address { get; private set; } = string.Empty;
 
         /// <summary>
         /// Block prefix URL
         /// </summary>
         [JsonInclude]
-        public string block { get; private set; }
+        public string block { get; private set; } = string.Empty;
 
         /// <summary>
         /// Main prefix URL

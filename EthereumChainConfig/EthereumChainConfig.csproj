@@ -6,6 +6,7 @@
         <AssemblyName>NokitaKaze.EthereumChainConfig</AssemblyName>
         <RootNamespace>NokitaKaze.EthereumChainConfig</RootNamespace>
         <Nullable>enable</Nullable>
+        <PackageVersion>0.1.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
