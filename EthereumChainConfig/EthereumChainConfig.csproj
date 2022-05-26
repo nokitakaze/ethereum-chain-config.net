@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <AssemblyName>NokitaKaze.EthereumChainConfig</AssemblyName>
+        <RootNamespace>NokitaKaze.EthereumChainConfig</RootNamespace>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Text.Json" Version="6.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="tornado-config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>
