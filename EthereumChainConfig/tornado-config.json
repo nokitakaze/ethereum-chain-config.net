@@ -22,9 +22,13 @@
         "networkName": "Ethereum Mainnet",
         "deployedBlock": 9116966,
         "rpcUrls": {
+            "ANKR": {
+                "name": "ANKR",
+                "url": "https://rpc.ankr.com/eth"
+            },
             "Infura": {
                 "name": "Infura",
-                "url": "https://mainnet.infura.io/v3/da564f81919d40c9a3bcaee4ff44438d"
+                "url": "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
             },
             "Alchemy": {
                 "name": "Alchemy",
@@ -228,6 +232,10 @@
                 "name": "BSC Public RPC 3",
                 "url": "https://bsc-dataseed1.ninicoin.io/"
             },
+            "ANKR": {
+                "name": "ANKR",
+                "url": "https://rpc.ankr.com/bsc"
+            },
             "quickNode": {
                 "name": "QuickNode",
                 "url": "https://wandering-sparkling-shadow.bsc.quiknode.pro/00115b17f97c1f4c374ac309858015da1cab3e02/"
@@ -428,7 +436,7 @@
         "rpcUrls": {
             "Infura": {
                 "name": "Infura",
-                "url": "https://polygon-mainnet.infura.io/v3/da564f81919d40c9a3bcaee4ff44438d"
+                "url": "https://polygon-mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
             },
             "Alchemy": {
                 "name": "Alchemy",
@@ -535,7 +543,7 @@
             },
             "Infura": {
                 "name": "Infura",
-                "url": "https://optimism-mainnet.infura.io/v3/da564f81919d40c9a3bcaee4ff44438d"
+                "url": "https://optimism-mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
             }
         },
         "tokens": {
@@ -617,7 +625,7 @@
             },
             "Infura": {
                 "name": "Infura",
-                "url": "https://arbitrum-mainnet.infura.io/v3/da564f81919d40c9a3bcaee4ff44438d"
+                "url": "https://arbitrum-mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
             }
         },
         "tokens": {
@@ -772,10 +780,10 @@
     "netId5": {
         "rpcCallRetryAttempt": 15,
         "gasPrices": {
-            "instant": 80,
-            "fast": 50,
-            "standard": 25,
-            "low": 8
+            "instant": 0.1,
+            "fast": 0.1,
+            "standard": 0.1,
+            "low": 0.1
         },
         "EIP1559Enabled": true,
         "nativeCurrency": "eth",
@@ -796,6 +804,14 @@
         "echoContractAccount": "0x37e6859804b6499d1e4a86d70a5fdd5de6a0ac65",
         "aggregatorContract": "0x8cb1436F64a3c33aD17bb42F94e255c4c0E871b2",
         "rpcUrls": {
+            "ANKR": {
+                "name": "ANKR",
+                "url": "https://rpc.ankr.com/eth_goerli"
+            },
+            "Infura": {
+                "name": "Infura",
+                "url": "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+            },
             "Alchemy": {
                 "name": "Alchemy",
                 "url": "https://eth-goerli.alchemyapi.io/v2/sF1EhlYnfLdBn9xbxZTmXdV5e8lqPJdm"
@@ -957,5 +973,43 @@
         "tornado-trees.contract.tornadocash.eth": "0x722122df12d4e14e13ac3b6895a86e84145b6967",
         "mining-v2.contract.tornadocash.eth": "0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
         "voucher.contract.tornadocash.eth": "0x3eFA30704D2b8BBAc821307230376556cF8CC39e"
+    },
+    "netId97": {
+        "rpcCallRetryAttempt": 15,
+        "gasPrices": {
+            "instant": 5,
+            "fast": 5,
+            "standard": 5,
+            "low": 5
+        },
+        "EIP1559Enabled": false,
+        "nativeCurrency": "tbnb",
+        "currencyName": "tBNB",
+        "explorerUrl": {
+            "tx": "https://testnet.bscscan.com/tx/",
+            "address": "https://testnet.bscscan.com/address/",
+            "block": "https://testnet.bscscan.com/block/"
+        },
+        "networkName": "Public Binance Smart Chain Testnet",
+        "merkleTreeHeight": 20,
+        "merkleTreeFarmerHeight": 20,
+        "deployedBlock": 0,
+        "tokens": {
+            "tbnb": {
+              "mixerAddress": {},
+              "miningEnabled": false,
+              "symbol": "tBNB",
+              "decimals": 18
+            }
+        },
+        "relayers": {},
+        "pollInterval": 60,
+        "constants": {},
+        "rpcUrls": {
+            "BinancePublicRPC": {
+                "name": "Public Binance Smart Chain Testnet RPC",
+                "url": "https://data-seed-prebsc-1-s1.binance.org:8545"
+            }
+        }
     }
 }

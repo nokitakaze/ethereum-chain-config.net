@@ -88,6 +88,7 @@ namespace NokitaKaze.EthereumChainConfig
             return Config[key];
         }
 
+        // ReSharper disable once ReturnTypeCanBeEnumerable.Global
         public int[] GetChainIds()
         {
             return Config

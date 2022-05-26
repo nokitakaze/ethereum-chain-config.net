@@ -64,6 +64,22 @@ namespace NokitaKaze.EthereumChainConfig.Test
             var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
             Assert.NotNull(service);
 
+            {
+                var chainIds = new[]
+                {
+                    EthereumChainConfigService.ETHEREUM_ID,
+                    EthereumChainConfigService.GOERLI_ID,
+                    EthereumChainConfigService.BNB_SMART_CHAIN_ID,
+                    EthereumChainConfigService.TEST_BNB_SMART_CHAIN_ID,
+                };
+
+                var existedChainIds = service.GetChainIds();
+                foreach (var chainId in chainIds)
+                {
+                    Assert.Contains(chainId, existedChainIds);
+                }
+            }
+
             foreach (var chainId in service.GetChainIds())
             {
                 var config = service.GetChainConfig(chainId);

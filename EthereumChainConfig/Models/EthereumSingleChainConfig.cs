@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace NokitaKaze.EthereumChainConfig.Models
 {
+    /// <summary>
+    /// Configuration for a singe chain like Ethereum or Binance or Goerli
+    /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     [DebuggerDisplay("Chain {currencyName} in {explorerUrl.mainUrlPrefix}")]
@@ -111,5 +115,14 @@ namespace NokitaKaze.EthereumChainConfig.Models
         [JsonPropertyName("voucher.contract.tornadocash.eth")]
         [JsonInclude]
         public string? voucher_contract_tornadocash_eth { get; private set; }
+
+        public ICollection<string> GetRPCUrls()
+        {
+            return rpcUrls!
+                .Values
+                .Select(t => t.url)
+                .Where(x => !string.IsNullOrEmpty(x))
+                .ToArray();
+        }
     }
 }

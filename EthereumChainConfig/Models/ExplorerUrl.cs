@@ -51,31 +51,31 @@ namespace NokitaKaze.EthereumChainConfig.Models
         [JsonIgnore]
         public string token => $"{mainUrlPrefix}/token/";
 
-        public string GetTxURL(string txId)
+        public string GetTxURL(string viewTxId)
         {
-            return tx + txId;
+            return tx + viewTxId;
         }
 
-        public string GetAddressURL(string address)
+        public string GetAddressURL(string viewAddress)
         {
-            return this.address + address;
+            return this.address + viewAddress;
         }
 
-        public string GetBlockURL(int blockId)
+        public string GetBlockURL(int viewBlockId)
         {
-            return block + blockId;
+            return block + viewBlockId;
         }
 
-        public string GetBalanceURL(string address, string? token = null)
+        public string GetBalanceURL(string viewAddress, string? viewToken = null)
         {
-            if (token == string.Empty)
+            if (viewToken == string.Empty)
             {
-                token = null;
+                viewToken = null;
             }
 
-            return (token != null)
-                ? $"{token}{token.ToLowerInvariant()}?a={address.ToLowerInvariant()}"
-                : $"{address}{address.ToLowerInvariant()}";
+            return (viewToken != null)
+                ? $"{viewToken}{viewToken.ToLowerInvariant()}?a={viewAddress.ToLowerInvariant()}"
+                : $"{viewAddress}{viewAddress.ToLowerInvariant()}";
         }
     }
 }
