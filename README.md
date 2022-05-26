@@ -1,6 +1,6 @@
 Tornado Cash Encrypted Note.Net: Cypher/Decypher
 ===========
-<!-- [![Build status](https://ci.appveyor.com/api/projects/status/buvwa4iu4ifo74a0/branch/master?svg=true)](https://ci.appveyor.com/project/nokitakaze/ethereum-chain-config-net/branch/master) -->
+[![Build status](https://ci.appveyor.com/api/projects/status/3klbulfalr5w24f6?svg=true)](https://ci.appveyor.com/project/nokitakaze/ethereum-chain-config-net)
 [![Test status](https://img.shields.io/appveyor/tests/nokitakaze/ethereum-chain-config-net)](https://ci.appveyor.com/project/nokitakaze/ethereum-chain-config-net/branch/master)
 
 This project is just a lemma for other Ethereum projects.
