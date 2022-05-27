@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace NokitaKaze.EthereumChainConfig
 {
-    /// Hint: decimals can't contain numbers like 1_000_000_000_000_000_000.000_000_000_000_000_001
+    // Hint: decimals can't contain numbers like 1_000_000_000_000_000_000.000_000_000_000_000_001
     public static class AmountConverter
     {
         public static decimal GetPoweredFromWei(int decimals, BigInteger wei)

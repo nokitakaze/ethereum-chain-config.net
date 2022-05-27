@@ -196,5 +196,126 @@ namespace NokitaKaze.EthereumChainConfig.Test
             Assert.Contains(10m, amounts);
             Assert.Contains(100m, amounts);
         }
+
+        [Fact]
+        public void ExplorerTest()
+        {
+            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            Assert.NotNull(service);
+
+            {
+                var ethereum = service.GetChainConfig(EthereumChainConfigService.ETHEREUM_ID);
+                Assert.Equal(
+                    "https://etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetAddressURL("0x00000000219ab540356cbb839cbe05303d7705fa")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetAddressURL("00000000219ab540356cbb839cbe05303d7705fa")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7",
+                    ethereum.explorerUrl!.GetTokenURL("dac17f958d2ee523a2206206994597c13d831ec7")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7",
+                    ethereum.explorerUrl!.GetTokenURL("0xdac17f958d2ee523a2206206994597c13d831ec7")
+                );
+
+                Assert.Equal(
+                    "https://etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("0x00000000219ab540356cbb839cbe05303d7705fa")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("00000000219ab540356cbb839cbe05303d7705fa")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("0x00000000219ab540356cbb839cbe05303d7705fa", string.Empty)
+                );
+                Assert.Equal(
+                    "https://etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("00000000219ab540356cbb839cbe05303d7705fa", string.Empty)
+                );
+
+                Assert.Equal(
+                    "https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7?a=0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("0x00000000219ab540356cbb839cbe05303d7705fa",
+                        "0xdac17f958d2ee523a2206206994597c13d831ec7")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7?a=0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("00000000219ab540356cbb839cbe05303d7705fa",
+                        "0xdac17f958d2ee523a2206206994597c13d831ec7")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7?a=0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("0x00000000219ab540356cbb839cbe05303d7705fa",
+                        "dac17f958d2ee523a2206206994597c13d831ec7")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7?a=0x00000000219ab540356cbb839cbe05303d7705fa",
+                    ethereum.explorerUrl!.GetBalanceURL("00000000219ab540356cbb839cbe05303d7705fa",
+                        "dac17f958d2ee523a2206206994597c13d831ec7")
+                );
+
+                Assert.Equal(
+                    "https://etherscan.io/block/1337",
+                    ethereum.explorerUrl!.GetBlockURL(1337)
+                );
+
+                Assert.Equal(
+                    "https://etherscan.io/tx/0x3ae84d941086860d2be4b97e3e530198c098e966431c7b06253fb7fca62be3a9",
+                    ethereum.explorerUrl!.GetTransactionURL(
+                        "0x3ae84d941086860d2be4b97e3e530198c098e966431c7b06253fb7fca62be3a9")
+                );
+                Assert.Equal(
+                    "https://etherscan.io/tx/0x3ae84d941086860d2be4b97e3e530198c098e966431c7b06253fb7fca62be3a9",
+                    ethereum.explorerUrl!.GetTransactionURL(
+                        "3ae84d941086860d2be4b97e3e530198c098e966431c7b06253fb7fca62be3a9")
+                );
+            }
+
+            {
+                var goerli = service.GetChainConfig(EthereumChainConfigService.GOERLI_ID);
+                Assert.Equal(
+                    "https://goerli.etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    goerli.explorerUrl!.GetAddressURL("0x00000000219ab540356cbb839cbe05303d7705fa")
+                );
+                Assert.Equal(
+                    "https://goerli.etherscan.io/address/0x00000000219ab540356cbb839cbe05303d7705fa",
+                    goerli.explorerUrl!.GetAddressURL("00000000219ab540356cbb839cbe05303d7705fa")
+                );
+
+                Assert.Equal(
+                    "https://goerli.etherscan.io/tx/0xcd95f75381910ae995de7d8a31a4289a89c0d45ebb498760571a83edc5b6aa84",
+                    goerli.explorerUrl!.GetTransactionURL(
+                        "0xcd95f75381910ae995de7d8a31a4289a89c0d45ebb498760571a83edc5b6aa84")
+                );
+                Assert.Equal(
+                    "https://goerli.etherscan.io/tx/0xcd95f75381910ae995de7d8a31a4289a89c0d45ebb498760571a83edc5b6aa84",
+                    goerli.explorerUrl!.GetTransactionURL(
+                        "cd95f75381910ae995de7d8a31a4289a89c0d45ebb498760571a83edc5b6aa84")
+                );
+            }
+        }
+
+        [Fact]
+        public void ExplorerDistinctTest()
+        {
+            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            Assert.NotNull(service);
+
+            var chains = service.GetChainIds();
+            var explorerUrls = chains
+                .Select(chainId => service.GetChainConfig(chainId).explorerUrl!.mainUrlPrefix)
+                .ToArray();
+
+            Assert.Equal(
+                explorerUrls.Length,
+                explorerUrls.Select(t => t.ToLowerInvariant().TrimEnd('/')).Distinct().Count()
+            );
+        }
     }
 }

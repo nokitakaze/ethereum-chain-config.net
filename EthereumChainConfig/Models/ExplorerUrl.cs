@@ -38,7 +38,7 @@ namespace NokitaKaze.EthereumChainConfig.Models
                 const string defaultAddressPostfix = "/address/";
                 if (!address.EndsWith(defaultAddressPostfix))
                 {
-                    throw new Exception("Unknown protocol");
+                    throw new Exception("Unknown url template");
                 }
 
                 return address[..^defaultAddressPostfix.Length];
@@ -51,14 +51,24 @@ namespace NokitaKaze.EthereumChainConfig.Models
         [JsonIgnore]
         public string token => $"{mainUrlPrefix}/token/";
 
-        public string GetTxURL(string viewTxId)
+        public static string EnsurePrefix(string rawString)
         {
-            return tx + viewTxId;
+            return rawString.StartsWith("0x") ? rawString : "0x" + rawString;
+        }
+
+        public string GetTransactionURL(string viewTxId)
+        {
+            return tx + EnsurePrefix(viewTxId);
         }
 
         public string GetAddressURL(string viewAddress)
         {
-            return this.address + viewAddress;
+            return address + EnsurePrefix(viewAddress);
+        }
+
+        public string GetTokenURL(string viewToken)
+        {
+            return token + EnsurePrefix(viewToken);
         }
 
         public string GetBlockURL(int viewBlockId)
@@ -74,8 +84,8 @@ namespace NokitaKaze.EthereumChainConfig.Models
             }
 
             return (viewToken != null)
-                ? $"{viewToken}{viewToken.ToLowerInvariant()}?a={viewAddress.ToLowerInvariant()}"
-                : $"{viewAddress}{viewAddress.ToLowerInvariant()}";
+                ? $"{token}{EnsurePrefix(viewToken).ToLowerInvariant()}?a={EnsurePrefix(viewAddress).ToLowerInvariant()}"
+                : $"{address}{EnsurePrefix(viewAddress).ToLowerInvariant()}";
         }
     }
 }

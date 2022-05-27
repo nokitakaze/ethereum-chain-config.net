@@ -134,5 +134,15 @@ namespace NokitaKaze.EthereumChainConfig.Test
                 }
             }
         }
+
+        [Fact]
+        public void GetBigIntegerWeiFromPowered_ZeroTest()
+        {
+            for (var dec = 1; dec < 18; dec++)
+            {
+                var big = AmountConverter.GetBigIntegerWeiFromPowered(dec, 0);
+                Assert.Equal(BigInteger.Zero, big);
+            }
+        }
     }
 }
