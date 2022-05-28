@@ -215,23 +215,67 @@
         "merkleTreeHeight": 20,
         "merkleTreeFarmerHeight": 20,
         "emptyElement": "21663839004416932945382355908790599225266501822907911457504978515578255421292",
-        "networkName": "Binance Smart Chain",
+        "networkName": "BNB Smart Chain",
         "deployedBlock": 8158799,
         "multicall": "0x41263cba59eb80dc200f3e2544eda4ed6a90e76c",
         "echoContractAccount": "0xa75BF2815618872f155b7C4B0C81bF990f5245E4",
         "rpcUrls": {
-            "publicRpc1": {
-                "name": "BSC Public RPC 1",
+            "recommendRpc1": {
+                "name": "BSC Public Recommend RPC 1",
                 "url": "https://bsc-dataseed.binance.org/"
             },
-            "publicRpc2": {
-                "name": "BSC Public RPC 2",
+            "recommendRpc2": {
+                "name": "BSC Public Recommend RPC 2",
                 "url": "https://bsc-dataseed1.defibit.io/"
             },
-            "publicRpc3": {
-                "name": "BSC Public RPC 3",
+            "recommendRpc3": {
+                "name": "BSC Public Recommend RPC 3",
                 "url": "https://bsc-dataseed1.ninicoin.io/"
             },
+
+            "backupDifibitRpc2": {
+                "name": "BSC Public Backup Difibit RPC 2",
+                "url": "https://bsc-dataseed2.defibit.io/"
+            },
+            "backupDifibitRpc3": {
+                "name": "BSC Public Backup Difibit RPC 3",
+                "url": "https://bsc-dataseed3.defibit.io/"
+            },
+            "backupDifibitRpc4": {
+                "name": "BSC Public Backup Difibit RPC 4",
+                "url": "https://bsc-dataseed4.defibit.io/"
+            },
+
+            "backupNinicoinRpc2": {
+                "name": "BSC Public Backup Ninicoin RPC 2",
+                "url": "https://bsc-dataseed2.ninicoin.io/"
+            },
+            "backupNinicoinRpc3": {
+                "name": "BSC Public Backup Ninicoin RPC 3",
+                "url": "https://bsc-dataseed3.ninicoin.io/"
+            },
+            "backupNinicoinRpc4": {
+                "name": "BSC Public Backup Ninicoin RPC 4",
+                "url": "https://bsc-dataseed4.ninicoin.io/"
+            },
+
+            "backupBinanceOrgRpc1": {
+                "name": "BSC Public Backup BinanceOrg RPC 1",
+                "url": "https://bsc-dataseed1.binance.org/"
+            },
+            "backupBinanceOrgRpc2": {
+                "name": "BSC Public Backup BinanceOrg RPC 2",
+                "url": "https://bsc-dataseed2.binance.org/"
+            },
+            "backupBinanceOrgRpc3": {
+                "name": "BSC Public Backup BinanceOrg RPC 3",
+                "url": "https://bsc-dataseed3.binance.org/"
+            },
+            "backupBinanceOrgRpc4": {
+                "name": "BSC Public Backup BinanceOrg RPC 4",
+                "url": "https://bsc-dataseed4.binance.org/"
+            },
+
             "ANKR": {
                 "name": "ANKR",
                 "url": "https://rpc.ankr.com/bsc"
@@ -990,7 +1034,7 @@
             "address": "https://testnet.bscscan.com/address/",
             "block": "https://testnet.bscscan.com/block/"
         },
-        "networkName": "Public Binance Smart Chain Testnet",
+        "networkName": "BNB Smart Chain Testnet",
         "merkleTreeHeight": 20,
         "merkleTreeFarmerHeight": 20,
         "deployedBlock": 0,
@@ -1006,9 +1050,29 @@
         "pollInterval": 60,
         "constants": {},
         "rpcUrls": {
-            "BinancePublicRPC": {
-                "name": "Public Binance Smart Chain Testnet RPC",
+            "BinancePublicRPC1": {
+                "name": "Public BNB Smart Chain Testnet RPC 1",
                 "url": "https://data-seed-prebsc-1-s1.binance.org:8545"
+            },
+            "BinancePublicRPC2": {
+                "name": "Public BNB Smart Chain Testnet RPC 2",
+                "url": "https://data-seed-prebsc-2-s1.binance.org:8545"
+            },
+            "BinancePublicRPC3": {
+                "name": "Public BNB Smart Chain Testnet RPC 3",
+                "url": "https://data-seed-prebsc-1-s2.binance.org:8545"
+            },
+            "BinancePublicRPC4": {
+                "name": "Public BNB Smart Chain Testnet RPC 4",
+                "url": "https://data-seed-prebsc-2-s2.binance.org:8545"
+            },
+            "BinancePublicRPC5": {
+                "name": "Public BNB Smart Chain Testnet RPC 5",
+                "url": "https://data-seed-prebsc-1-s3.binance.org:8545"
+            },
+            "BinancePublicRPC6": {
+                "name": "Public BNB Smart Chain Testnet RPC 6",
+                "url": "https://data-seed-prebsc-2-s3.binance.org:8545"
             }
         }
     }

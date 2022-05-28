@@ -122,6 +122,7 @@ namespace NokitaKaze.EthereumChainConfig.Models
                 .Values
                 .Select(t => t.url)
                 .Where(x => !string.IsNullOrEmpty(x))
+                .Select(t => t.TrimEnd('/') + "/")
                 .ToArray();
         }
     }

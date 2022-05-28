@@ -6,11 +6,11 @@
         <AssemblyName>NokitaKaze.EthereumChainConfig</AssemblyName>
         <RootNamespace>NokitaKaze.EthereumChainConfig</RootNamespace>
         <Nullable>enable</Nullable>
-        <PackageVersion>0.1.4</PackageVersion>
+        <PackageVersion>0.1.5</PackageVersion>
         <Authors>NokitaKaze</Authors>
 	    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/nokitakaze/ethereum-chain-config.net</RepositoryUrl>
-        <PackageTags>ethereum</PackageTags>
+        <PackageTags>ethereum bsc binance bnbchain ropsten rinkeby goerli</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
