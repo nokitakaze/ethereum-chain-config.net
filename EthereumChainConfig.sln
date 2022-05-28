@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumChainConfig", "Ethe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthereumChainConfigTest", "EthereumChainConfigTest\EthereumChainConfigTest.csproj", "{91F5E82F-AABD-4DFD-A698-D62F9EA1CACC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckJsonDataContract", "CheckJsonDataContract\CheckJsonDataContract.csproj", "{FCAA151A-79F6-46A9-ACBC-5B3ED9650927}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{91F5E82F-AABD-4DFD-A698-D62F9EA1CACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91F5E82F-AABD-4DFD-A698-D62F9EA1CACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91F5E82F-AABD-4DFD-A698-D62F9EA1CACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCAA151A-79F6-46A9-ACBC-5B3ED9650927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCAA151A-79F6-46A9-ACBC-5B3ED9650927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCAA151A-79F6-46A9-ACBC-5B3ED9650927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCAA151A-79F6-46A9-ACBC-5B3ED9650927}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

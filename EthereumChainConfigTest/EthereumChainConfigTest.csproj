@@ -8,11 +8,15 @@
         <AssemblyName>NokitaKaze.EthereumChainConfig.Test</AssemblyName>
 
         <RootNamespace>NokitaKaze.EthereumChainConfig.Test</RootNamespace>
+
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+        <PackageReference Include="Nethereum.Contracts" Version="4.5.0" />
         <PackageReference Include="Nethereum.Hex" Version="4.5.0" />
+        <PackageReference Include="Nethereum.Web3" Version="4.5.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +30,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EthereumChainConfig\EthereumChainConfig.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="erc20-token-abi.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

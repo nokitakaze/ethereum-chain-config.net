@@ -1040,10 +1040,10 @@
         "deployedBlock": 0,
         "tokens": {
             "tbnb": {
-              "mixerAddress": {},
-              "miningEnabled": false,
-              "symbol": "tBNB",
-              "decimals": 18
+                "mixerAddress": {},
+                "miningEnabled": false,
+                "symbol": "tBNB",
+                "decimals": 18
             }
         },
         "relayers": {},
@@ -1052,27 +1052,27 @@
         "rpcUrls": {
             "BinancePublicRPC1": {
                 "name": "Public BNB Smart Chain Testnet RPC 1",
-                "url": "https://data-seed-prebsc-1-s1.binance.org:8545"
+                "url": "https://data-seed-prebsc-1-s1.binance.org:8545/"
             },
             "BinancePublicRPC2": {
                 "name": "Public BNB Smart Chain Testnet RPC 2",
-                "url": "https://data-seed-prebsc-2-s1.binance.org:8545"
+                "url": "https://data-seed-prebsc-2-s1.binance.org:8545/"
             },
             "BinancePublicRPC3": {
                 "name": "Public BNB Smart Chain Testnet RPC 3",
-                "url": "https://data-seed-prebsc-1-s2.binance.org:8545"
+                "url": "https://data-seed-prebsc-1-s2.binance.org:8545/"
             },
             "BinancePublicRPC4": {
                 "name": "Public BNB Smart Chain Testnet RPC 4",
-                "url": "https://data-seed-prebsc-2-s2.binance.org:8545"
+                "url": "https://data-seed-prebsc-2-s2.binance.org:8545/"
             },
             "BinancePublicRPC5": {
                 "name": "Public BNB Smart Chain Testnet RPC 5",
-                "url": "https://data-seed-prebsc-1-s3.binance.org:8545"
+                "url": "https://data-seed-prebsc-1-s3.binance.org:8545/"
             },
             "BinancePublicRPC6": {
                 "name": "Public BNB Smart Chain Testnet RPC 6",
-                "url": "https://data-seed-prebsc-2-s3.binance.org:8545"
+                "url": "https://data-seed-prebsc-2-s3.binance.org:8545/"
             }
         }
     }

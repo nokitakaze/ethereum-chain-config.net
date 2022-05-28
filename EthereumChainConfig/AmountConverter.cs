@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 
 namespace NokitaKaze.EthereumChainConfig
@@ -16,7 +15,7 @@ namespace NokitaKaze.EthereumChainConfig
 
             if (wei.Sign == -1)
             {
-                throw new Exception("Value lesser than 0");
+                throw new EthereumChainConfigException("Value lesser than 0", 1001);
             }
 
             var precisionPower = Enumerable
@@ -42,7 +41,7 @@ namespace NokitaKaze.EthereumChainConfig
 
             if (wei < 0)
             {
-                throw new Exception("Value lesser than 0");
+                throw new EthereumChainConfigException("Value lesser than 0", 1002);
             }
 
             var precisionPower = Enumerable
@@ -68,7 +67,7 @@ namespace NokitaKaze.EthereumChainConfig
 
             if (poweredValue < 0)
             {
-                throw new Exception("Value lesser than 0");
+                throw new EthereumChainConfigException("Value lesser than 0", 1003);
             }
 
             var precisionPower = Enumerable

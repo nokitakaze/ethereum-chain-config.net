@@ -1,5 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using NokitaKaze.EthereumChainConfig.Models;
 using Xunit;
 
@@ -58,10 +63,49 @@ namespace NokitaKaze.EthereumChainConfig.Test
                 .ToArray();
         }
 
-        [Fact]
-        public void MainTest()
+        #region Assert Valid Address
+
+        private static readonly Regex rValidAddress = new Regex("^0x[a-fA-F0-9]{40,40}$");
+
+        private void AssertValidAddressNullEmpty(string? address)
         {
-            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            if (string.IsNullOrEmpty(address))
+            {
+                return;
+            }
+
+            AssertValidAddress(address);
+        }
+
+        private void AssertValidAddress(string address)
+        {
+            Assert.Matches(rValidAddress, address);
+        }
+
+        #endregion
+
+        public static IEnumerable<object[]> MainTestData()
+        {
+            var defaultFilename = Path.Combine(AppContext.BaseDirectory,
+                EthereumChainConfigService.DefaultTornadoConfigFilename);
+            var json = File.ReadAllText(defaultFilename);
+
+            var services = new[]
+            {
+                EthereumChainConfigService.CreateConfigFromDefaultFile(),
+                EthereumChainConfigService.CreateConfigFromDefaultFileAsync().GetAwaiter().GetResult(),
+                EthereumChainConfigService.CreateConfigFromFile(defaultFilename),
+                EthereumChainConfigService.CreateConfigFromFileAsync(defaultFilename).GetAwaiter().GetResult(),
+                EthereumChainConfigService.CreateConfigFromJson(json),
+            };
+
+            return services.Select(service => new[] { service });
+        }
+
+        [Theory]
+        [MemberData(nameof(MainTestData))]
+        public void MainTest(EthereumChainConfigService service)
+        {
             Assert.NotNull(service);
 
             {
@@ -83,6 +127,12 @@ namespace NokitaKaze.EthereumChainConfig.Test
             foreach (var chainId in service.GetChainIds())
             {
                 var config = service.GetChainConfig(chainId);
+
+                AssertValidAddressNullEmpty(config.echoContract);
+                AssertValidAddressNullEmpty(config.echoContractAccount);
+                AssertValidAddressNullEmpty(config.multicall);
+                AssertValidAddressNullEmpty(config.aggregatorContract);
+
                 foreach (var prop in FieldsNotEmptyProps)
                 {
                     var value = prop.GetValue(config);
@@ -131,12 +181,18 @@ namespace NokitaKaze.EthereumChainConfig.Test
             var config = service.GetChainConfig(EthereumChainConfigService.ETHEREUM_ID);
 
             Assert.True(config.EIP1559Enabled);
+            Assert.NotNull(config.tornado_proxy_contract_tornadocash_eth);
+            Assert.NotNull(config.tornado_proxy_contract_projected);
+            AssertValidAddress(config.tornado_proxy_contract_tornadocash_eth!);
+            AssertValidAddress(config.tornado_proxy_contract_projected!);
             Assert.Equal("ETH", config.currencyName);
             Assert.Equal("eth", config.nativeCurrency);
             Assert.Equal(18, config.nativeCurrencyDecimals);
 
             Assert.Contains("eth", config.tokens!.Keys);
             Assert.Contains("dai", config.tokens!.Keys);
+
+            Assert.True(config.tokens!["eth"].miningEnabled);
 
             var amounts = config.tokens["eth"].GetAmounts();
             Assert.Contains(0.1m, amounts);
@@ -158,6 +214,10 @@ namespace NokitaKaze.EthereumChainConfig.Test
             var config = service.GetChainConfig(EthereumChainConfigService.GOERLI_ID);
 
             Assert.True(config.EIP1559Enabled);
+            Assert.NotNull(config.tornado_proxy_contract_tornadocash_eth);
+            Assert.NotNull(config.tornado_proxy_contract_projected);
+            AssertValidAddress(config.tornado_proxy_contract_tornadocash_eth!);
+            AssertValidAddress(config.tornado_proxy_contract_projected!);
             Assert.Equal("gETH", config.currencyName);
             Assert.Equal("eth", config.nativeCurrency);
             Assert.Equal(18, config.nativeCurrencyDecimals);
@@ -184,6 +244,8 @@ namespace NokitaKaze.EthereumChainConfig.Test
             var config = service.GetChainConfig(EthereumChainConfigService.BNB_SMART_CHAIN_ID);
 
             Assert.False(config.EIP1559Enabled);
+            Assert.NotNull(config.tornado_proxy_contract_projected);
+            AssertValidAddress(config.tornado_proxy_contract_projected!);
             Assert.Equal("BNB", config.currencyName);
             Assert.Equal("bnb", config.nativeCurrency);
             Assert.Equal(18, config.nativeCurrencyDecimals);
@@ -316,6 +378,175 @@ namespace NokitaKaze.EthereumChainConfig.Test
                 explorerUrls.Length,
                 explorerUrls.Select(t => t.ToLowerInvariant().TrimEnd('/')).Distinct().Count()
             );
+        }
+
+        #region Constructor exception tests
+
+        private static string GetWrongFilename()
+        {
+            var rnd = new Random();
+
+            // ReSharper disable once UseStringInterpolation
+            return string.Format("{0}/nyanpasu-{1}.json", AppContext.BaseDirectory, rnd.Next(0, 1_000_000));
+        }
+
+        [Fact]
+        public void CreateConfigFromFileExceptionTest()
+        {
+            try
+            {
+                var filename = GetWrongFilename();
+                EthereumChainConfigService.CreateConfigFromFile(filename);
+            }
+            catch (EthereumChainConfigException e)
+            {
+                Assert.InRange(e.ErrorCode, 1, 999);
+            }
+        }
+
+        [Fact]
+        public void CreateConfigFromFileExceptionAsyncTest()
+        {
+            try
+            {
+                var filename = GetWrongFilename();
+                EthereumChainConfigService.CreateConfigFromFileAsync(filename).GetAwaiter().GetResult();
+            }
+            catch (EthereumChainConfigException e)
+            {
+                Assert.InRange(e.ErrorCode, 1, 999);
+            }
+        }
+
+        #endregion
+
+        [Fact]
+        public void NotValidChain()
+        {
+            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            Assert.NotNull(service);
+            var chains = service.GetChainIds();
+            var rnd = new Random();
+
+            int chainId;
+            do
+            {
+                chainId = rnd.Next(1, 65_535);
+            } while (chains.Contains(chainId));
+
+            try
+            {
+                service.GetChainConfig(chainId);
+            }
+            catch (EthereumChainConfigException e)
+            {
+                Assert.InRange(e.ErrorCode, 1, 999);
+            }
+        }
+
+        public static IEnumerable<object[]> GetAvailableChains()
+        {
+            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            return service
+                .GetChainIds()
+                .Select(chainId => new object[] { chainId })
+                .ToArray();
+        }
+
+        [Theory]
+        [MemberData(nameof(GetAvailableChains))]
+        public async Task CheckTokens(int chainId)
+        {
+            var service = await EthereumChainConfigService.CreateConfigFromDefaultFileAsync();
+            Assert.NotNull(service);
+
+            var abiFilename = Path.Combine(AppContext.BaseDirectory, "erc20-token-abi.json");
+            var abiText = await File.ReadAllTextAsync(abiFilename);
+
+
+            var config = service.GetChainConfig(chainId);
+            Assert.NotEmpty(config.nativeCurrency);
+
+            if (config.tokens == null)
+            {
+                return;
+            }
+
+            var nativeCurrency = config.nativeCurrency.ToLowerInvariant();
+            var web3 = new Nethereum.Web3.Web3(config.rpcUrls!.Values.First().url);
+            Assert.Contains(nativeCurrency, config.tokens.Keys);
+            foreach (var (tokenName, token) in config.tokens)
+            {
+                if (tokenName == nativeCurrency)
+                {
+                    Assert.Null(token.tokenAddress);
+                    continue;
+                }
+
+                Assert.NotNull(token.tokenAddress);
+                AssertValidAddress(token.tokenAddress!);
+                var contract = web3.Eth.GetContract(abiText, token.tokenAddress);
+                var function = contract.GetFunction("decimals");
+                var realDecimal = await function.CallAsync<int>();
+                Assert.Equal(realDecimal, token.decimals);
+
+                function = contract.GetFunction("symbol");
+                var realSymbol = await function.CallAsync<string>();
+                Assert.Equal(realSymbol, token.symbol);
+
+                // ReSharper disable once InvertIf
+                if (token.mixerAddress != null)
+                {
+                    foreach (var (amount, value) in token.mixerAddress!)
+                    {
+                        Assert.True(decimal.TryParse(amount, out _));
+                        AssertValidAddressNullEmpty(value);
+                    }
+                }
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetAvailableChains))]
+        public void CheckRPC(int chainId)
+        {
+            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            Assert.NotNull(service);
+
+            var config = service.GetChainConfig(chainId);
+            Assert.NotEmpty(config.nativeCurrency);
+            Assert.NotNull(config.rpcUrls);
+
+            foreach (var rpcUrl in config.rpcUrls!.Values)
+            {
+                Assert.NotEmpty(rpcUrl.name);
+                Assert.NotEmpty(rpcUrl.url);
+
+                var url = new Uri(rpcUrl.url);
+                Assert.Contains(url.Scheme, new[] { "http", "https" });
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetAvailableChains))]
+        public void CheckRelayer(int chainId)
+        {
+            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            Assert.NotNull(service);
+
+            var config = service.GetChainConfig(chainId);
+            Assert.NotEmpty(config.nativeCurrency);
+            Assert.NotNull(config.relayers);
+
+            foreach (var relayer in config.relayers!.Values)
+            {
+                Assert.NotEmpty(relayer.name);
+                Assert.NotEmpty(relayer.url);
+                Assert.NotEmpty(relayer.cachedUrl);
+
+                var url = new Uri(relayer.cachedUrl);
+                Assert.Contains(url.Scheme, new[] { "http", "https" });
+            }
         }
     }
 }

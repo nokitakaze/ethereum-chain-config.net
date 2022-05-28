@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
@@ -38,7 +37,7 @@ namespace NokitaKaze.EthereumChainConfig.Models
                 const string defaultAddressPostfix = "/address/";
                 if (!address.EndsWith(defaultAddressPostfix))
                 {
-                    throw new Exception("Unknown url template");
+                    throw new EthereumChainConfigException("Unknown url template", 2001);
                 }
 
                 return address[..^defaultAddressPostfix.Length];

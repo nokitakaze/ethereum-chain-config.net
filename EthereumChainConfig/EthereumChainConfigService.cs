@@ -80,7 +80,8 @@ namespace NokitaKaze.EthereumChainConfig
         {
             if (!File.Exists(filename))
             {
-                throw new Exception("Config ethereum file " + filename + " not found");
+                throw new EthereumChainConfigException(
+                    "Config ethereum file " + filename + " not found", 1);
             }
 
             var jsonText = File.ReadAllText(filename);
@@ -93,7 +94,8 @@ namespace NokitaKaze.EthereumChainConfig
             var filename = Path.Combine(AppContext.BaseDirectory, DefaultTornadoConfigFilename);
             if (!File.Exists(filename))
             {
-                throw new Exception("Can not find default config named " + DefaultTornadoConfigFilename);
+                throw new EthereumChainConfigException(
+                    "Can not find default config named " + DefaultTornadoConfigFilename, 2);
             }
 
             return CreateConfigFromFile(filename);
@@ -103,7 +105,8 @@ namespace NokitaKaze.EthereumChainConfig
         {
             if (!File.Exists(filename))
             {
-                throw new Exception("Config ethereum file " + filename + " not found");
+                throw new EthereumChainConfigException(
+                    "Config ethereum file " + filename + " not found", 3);
             }
 
             var jsonText = await File.ReadAllTextAsync(filename);
@@ -116,7 +119,8 @@ namespace NokitaKaze.EthereumChainConfig
             var filename = Path.Combine(AppContext.BaseDirectory, DefaultTornadoConfigFilename);
             if (!File.Exists(filename))
             {
-                throw new Exception("Can not find default config named " + DefaultTornadoConfigFilename);
+                throw new EthereumChainConfigException(
+                    "Can not find default config named " + DefaultTornadoConfigFilename, 4);
             }
 
             return CreateConfigFromFileAsync(filename);
@@ -129,7 +133,8 @@ namespace NokitaKaze.EthereumChainConfig
             var key = "netId" + chainId;
             if (!Config.ContainsKey(key))
             {
-                throw new Exception($"Can not find chain {chainId} in config dictionary");
+                throw new EthereumChainConfigException(
+                    $"Can not find chain {chainId} in config dictionary", 5);
             }
 
             return Config[key];

@@ -144,5 +144,48 @@ namespace NokitaKaze.EthereumChainConfig.Test
                 Assert.Equal(BigInteger.Zero, big);
             }
         }
+
+        #region Minus one
+
+        [Fact]
+        public void GetPoweredFromWeiBigIntExceptionTest()
+        {
+            try
+            {
+                AmountConverter.GetPoweredFromWei(6, BigInteger.MinusOne);
+            }
+            catch (EthereumChainConfigException e)
+            {
+                Assert.InRange(e.ErrorCode, 1001, 1999);
+            }
+        }
+
+        [Fact]
+        public void GetPoweredFromWeiDecimalExceptionTest()
+        {
+            try
+            {
+                AmountConverter.GetPoweredFromWei(6, -1m);
+            }
+            catch (EthereumChainConfigException e)
+            {
+                Assert.InRange(e.ErrorCode, 1001, 1999);
+            }
+        }
+
+        [Fact]
+        public void GetBigIntegerWeiFromPoweredExceptionTest()
+        {
+            try
+            {
+                AmountConverter.GetBigIntegerWeiFromPowered(6, -1);
+            }
+            catch (EthereumChainConfigException e)
+            {
+                Assert.InRange(e.ErrorCode, 1001, 1999);
+            }
+        }
+
+        #endregion
     }
 }

@@ -104,6 +104,13 @@ namespace NokitaKaze.EthereumChainConfig.Models
         [JsonInclude]
         public string? tornado_proxy_contract_tornadocash_eth { get; private set; }
 
+        [JsonPropertyName("tornado-proxy-light.contract.tornadocash.eth")]
+        [JsonInclude]
+        public string? tornado_proxy_light_contract_tornadocash_eth { get; private set; }
+
+        public string? tornado_proxy_contract_projected =>
+            tornado_proxy_contract_tornadocash_eth ?? tornado_proxy_light_contract_tornadocash_eth;
+
         [JsonPropertyName("tornado-trees.contract.tornadocash.eth")]
         [JsonInclude]
         public string? tornado_trees_contract_tornadocash_eth { get; private set; }
