@@ -31,17 +31,71 @@ namespace NokitaKaze.EthereumChainConfig.CheckJsonDataContract
             switch (realItem.Type)
             {
                 case JTokenType.Integer:
-                    // todo check
+                {
+                    var suitableClass = new[]
+                    {
+                        typeof(int),
+                        typeof(long),
+                        typeof(decimal),
+                    };
+
+                    if (suitableClass.All(x => x != dataContract))
+                    {
+                        Console.WriteLine("Item of type [{1}] {0} isn't suitable to {2}",
+                            path, dataContract.Name, "Integer");
+                    }
+
                     break;
+                }
                 case JTokenType.Float:
-                    // todo check
+                {
+                    var suitableClass = new[]
+                    {
+                        typeof(float),
+                        typeof(double),
+                        typeof(decimal),
+                    };
+
+                    if (suitableClass.All(x => x != dataContract))
+                    {
+                        Console.WriteLine("Item of type [{1}] {0} isn't suitable to {2}",
+                            path, dataContract.Name, "Float");
+                    }
+
                     break;
+                }
                 case JTokenType.String:
-                    // todo check
+                {
+                    var suitableClass = new[]
+                    {
+                        typeof(string),
+                    };
+
+                    if (suitableClass.All(x => x != dataContract))
+                    {
+                        // todo Attribute Read As String
+
+                        Console.WriteLine("Item of type [{1}] {0} isn't suitable to {2}",
+                            path, dataContract.Name, "String");
+                    }
+
                     break;
+                }
                 case JTokenType.Boolean:
-                    // todo check
+                {
+                    var suitableClass = new[]
+                    {
+                        typeof(bool),
+                    };
+
+                    if (suitableClass.All(x => x != dataContract))
+                    {
+                        Console.WriteLine("Item of type [{1}] {0}/ isn't suitable to {2}",
+                            path, dataContract.Name, "Boolean");
+                    }
+
                     break;
+                }
                 case JTokenType.Array:
                     throw new NotImplementedException();
                 case JTokenType.Object:
