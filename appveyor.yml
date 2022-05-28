@@ -9,7 +9,7 @@ before_build:
   - choco install codecov
 
 test_script:
-  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[NokitaKaze.EthereumChainConfig*]* -[*.MainTest]* -[NokitaKaze.EthereumChainConfig.CheckJsonDataContract*]*" -output:".\MyProject_coverage.xml" -oldstyle
+  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[NokitaKaze.EthereumChainConfig*]* -[*.Test]* -[NokitaKaze.EthereumChainConfig.CheckJsonDataContract*]*" -output:".\MyProject_coverage.xml" -oldstyle
 
 after_test:
   - codecov -f "MyProject_coverage.xml"
