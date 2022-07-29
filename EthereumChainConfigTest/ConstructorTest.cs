@@ -171,6 +171,13 @@ namespace NokitaKaze.EthereumChainConfig.Test
                     .Select(t => t.Value.decimals)
                     .ToList()
                     .ForEach(value => Assert.InRange(value, 1, 36));
+
+                foreach (var url in config.GetRPCUrls())
+                {
+                    Assert.True(url.StartsWith("http://") || url.StartsWith("https://"));
+                    Assert.EndsWith("/", url);
+                    var _ = new Uri(url);
+                }
             }
         }
 

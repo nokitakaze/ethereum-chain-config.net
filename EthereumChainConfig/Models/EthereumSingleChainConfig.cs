@@ -123,6 +123,10 @@ namespace NokitaKaze.EthereumChainConfig.Models
         [JsonInclude]
         public string? voucher_contract_tornadocash_eth { get; private set; }
 
+        /// <summary>
+        /// Get RPC urls for the net
+        /// </summary>
+        /// <returns></returns>
         public ICollection<string> GetRPCUrls()
         {
             return rpcUrls!
