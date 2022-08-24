@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Nethereum.Hex.HexTypes;
+using Nethereum.Web3;
 using NokitaKaze.EthereumChainConfig.Models;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NokitaKaze.EthereumChainConfig.Test
 {
     public class ConstructorTest
     {
+        private readonly ITestOutputHelper _testOutputHelper;
         private static readonly PropertyInfo[] FieldsNotEmptyProps;
         private static readonly PropertyInfo[] FieldsNotMinusOneProps;
         private static readonly PropertyInfo[] FieldsOnlyNullOrNotEmptyProps;
@@ -66,6 +71,11 @@ namespace NokitaKaze.EthereumChainConfig.Test
         #region Assert Valid Address
 
         private static readonly Regex rValidAddress = new Regex("^0x[a-fA-F0-9]{40,40}$");
+
+        public ConstructorTest(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
 
         private void AssertValidAddressNullEmpty(string? address)
         {
@@ -470,7 +480,6 @@ namespace NokitaKaze.EthereumChainConfig.Test
             var abiFilename = Path.Combine(AppContext.BaseDirectory, "erc20-token-abi.json");
             var abiText = await File.ReadAllTextAsync(abiFilename);
 
-
             var config = service.GetChainConfig(chainId);
             Assert.NotEmpty(config.nativeCurrency);
 
@@ -480,6 +489,13 @@ namespace NokitaKaze.EthereumChainConfig.Test
             }
 
             var nativeCurrency = config.nativeCurrency.ToLowerInvariant();
+            if (!config.rpcUrls!.Values.Any())
+            {
+                // No RPC for this chain
+                _testOutputHelper.WriteLine($"Chain {chainId} contains no RPC");
+                return;
+            }
+
             var web3 = new Nethereum.Web3.Web3(config.rpcUrls!.Values.First().url);
             Assert.Contains(nativeCurrency, config.tokens.Keys);
             foreach (var (tokenName, token) in config.tokens)
@@ -515,9 +531,18 @@ namespace NokitaKaze.EthereumChainConfig.Test
 
         [Theory]
         [MemberData(nameof(GetAvailableChains))]
-        public void CheckRPC(int chainId)
+        public async Task CheckRPC(int chainId)
         {
-            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+            string DefaultAccountPrivateKey;
+            {
+                var rnd = new Random();
+                var privateBytes = new byte[32];
+                rnd.NextBytes(privateBytes);
+
+                DefaultAccountPrivateKey = string.Concat(privateBytes.Select(t => t.ToString("x2")));
+            }
+
+            var service = await EthereumChainConfigService.CreateConfigFromDefaultFileAsync();
             Assert.NotNull(service);
 
             var config = service.GetChainConfig(chainId);
@@ -531,6 +556,31 @@ namespace NokitaKaze.EthereumChainConfig.Test
 
                 var url = new Uri(rpcUrl.url);
                 Assert.Contains(url.Scheme, new[] { "http", "https" });
+
+                var client = new Nethereum.Web3.Accounts.Account(DefaultAccountPrivateKey, new BigInteger(chainId));
+                var web3 = new Web3(client, rpcUrl.url);
+                HexBigInteger? lastBlockNumber;
+                try
+                {
+                    lastBlockNumber = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
+                    Assert.True(lastBlockNumber.Value > BigInteger.Zero);
+                }
+                catch (Exception e)
+                {
+                    Assert.True(false, "Can't get last block from " + rpcUrl.url + "\n" + e.Message);
+                    throw; // hint: for ide & compiler
+                }
+
+                var block = await web3
+                    .Eth
+                    .Blocks
+                    .GetBlockWithTransactionsHashesByNumber
+                    .SendRequestAsync(lastBlockNumber);
+
+                var dtMin = DateTimeOffset.UtcNow.ToUniversalTime().ToUnixTimeSeconds() - 6 * 3600;
+                var blockTime = (long)(block.Timestamp.Value);
+
+                Assert.True(blockTime >= dtMin, "RPC " + rpcUrl.url + " isn't synced");
             }
         }
 
