@@ -470,6 +470,33 @@ namespace NokitaKaze.EthereumChainConfig.Test
                 .ToArray();
         }
 
+        public static IEnumerable<object[]> GetAvailableChainsWithUrl()
+        {
+            var service = EthereumChainConfigService.CreateConfigFromDefaultFile();
+
+            foreach (var chainId in service.GetChainIds())
+            {
+                var config = service.GetChainConfig(chainId);
+                Assert.NotEmpty(config.nativeCurrency);
+                Assert.NotNull(config.rpcUrls);
+            }
+
+            return service
+                .GetChainIds()
+                .SelectMany(chainId =>
+                {
+                    var config = service.GetChainConfig(chainId);
+                    // ReSharper disable once ConvertIfStatementToReturnStatement
+                    if (config.rpcUrls == null)
+                    {
+                        return Array.Empty<object[]>();
+                    }
+
+                    return config.rpcUrls!.Select(url => new object[] { chainId, url.Value.url });
+                })
+                .ToArray();
+        }
+
         [Theory]
         [MemberData(nameof(GetAvailableChains))]
         public async Task CheckTokens(int chainId)
@@ -533,6 +560,31 @@ namespace NokitaKaze.EthereumChainConfig.Test
         [MemberData(nameof(GetAvailableChains))]
         public async Task CheckRPC(int chainId)
         {
+            var service = await EthereumChainConfigService.CreateConfigFromDefaultFileAsync();
+            Assert.NotNull(service);
+
+            var config = service.GetChainConfig(chainId);
+            Assert.NotEmpty(config.nativeCurrency);
+            Assert.NotNull(config.rpcUrls);
+
+            if (!config.rpcUrls!.Values.Any())
+            {
+                // No RPC for this chain
+                _testOutputHelper.WriteLine($"Chain {chainId} contains no RPC");
+                return;
+            }
+
+            foreach (var rpcUrl in config.rpcUrls!.Values)
+            {
+                Assert.NotEmpty(rpcUrl.name);
+                Assert.NotEmpty(rpcUrl.url);
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetAvailableChainsWithUrl))]
+        public async Task CheckRPCWithURL(int chainId, string rpcUrl)
+        {
             string DefaultAccountPrivateKey;
             {
                 var rnd = new Random();
@@ -542,46 +594,37 @@ namespace NokitaKaze.EthereumChainConfig.Test
                 DefaultAccountPrivateKey = string.Concat(privateBytes.Select(t => t.ToString("x2")));
             }
 
-            var service = await EthereumChainConfigService.CreateConfigFromDefaultFileAsync();
-            Assert.NotNull(service);
+            var url = new Uri(rpcUrl);
+            Assert.Contains(url.Scheme, new[] { "http", "https" });
 
-            var config = service.GetChainConfig(chainId);
-            Assert.NotEmpty(config.nativeCurrency);
-            Assert.NotNull(config.rpcUrls);
-
-            foreach (var rpcUrl in config.rpcUrls!.Values)
+            var client = new Nethereum.Web3.Accounts.Account(DefaultAccountPrivateKey, new BigInteger(chainId));
+            var web3 = new Web3(client, rpcUrl);
+            try
             {
-                Assert.NotEmpty(rpcUrl.name);
-                Assert.NotEmpty(rpcUrl.url);
-
-                var url = new Uri(rpcUrl.url);
-                Assert.Contains(url.Scheme, new[] { "http", "https" });
-
-                var client = new Nethereum.Web3.Accounts.Account(DefaultAccountPrivateKey, new BigInteger(chainId));
-                var web3 = new Web3(client, rpcUrl.url);
-                HexBigInteger? lastBlockNumber;
-                try
-                {
-                    lastBlockNumber = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
-                    Assert.True(lastBlockNumber.Value > BigInteger.Zero);
-                }
-                catch (Exception e)
-                {
-                    Assert.True(false, "Can't get last block from " + rpcUrl.url + "\n" + e.Message);
-                    throw; // hint: for ide & compiler
-                }
-
-                var block = await web3
-                    .Eth
-                    .Blocks
-                    .GetBlockWithTransactionsHashesByNumber
-                    .SendRequestAsync(lastBlockNumber);
-
-                var dtMin = DateTimeOffset.UtcNow.ToUniversalTime().ToUnixTimeSeconds() - 6 * 3600;
-                var blockTime = (long)(block.Timestamp.Value);
-
-                Assert.True(blockTime >= dtMin, "RPC " + rpcUrl.url + " isn't synced");
+                var responseChainId = await web3.Eth.ChainId.SendRequestAsync();
+                var realRPCChainID = (int)responseChainId!.Value;
+                var errorString = "RPC " + rpcUrl + " has wrong chain " + responseChainId.Value;
+                Assert.True(chainId == realRPCChainID, errorString);
             }
+            catch (Exception e)
+            {
+                Assert.True(false, "Can't get chain id from " + rpcUrl + "\n" + e.Message);
+                throw; // hint: for ide & compiler
+            }
+
+            var lastBlockNumber = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
+            Assert.True(lastBlockNumber.Value > BigInteger.Zero);
+
+            var block = await web3
+                .Eth
+                .Blocks
+                .GetBlockWithTransactionsHashesByNumber
+                .SendRequestAsync(lastBlockNumber);
+
+            var dtMin = DateTimeOffset.UtcNow.ToUniversalTime().ToUnixTimeSeconds() - 6 * 3600;
+            var blockTime = (long)(block.Timestamp.Value);
+
+            Assert.True(blockTime >= dtMin, "RPC " + rpcUrl + " isn't synced");
         }
 
         [Theory]

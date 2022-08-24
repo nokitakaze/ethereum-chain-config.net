@@ -30,9 +30,17 @@
                 "name": "Infura",
                 "url": "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
             },
-            "Alchemy": {
-                "name": "Alchemy",
-                "url": "https://eth-mainnet.alchemyapi.io/v2/Mr-4mfUSoT5xfF6iHbrdAEoGEE9hVzQa"
+            "MyEtherWallet":{
+                "name":"MyEtherWallet",
+                "url":"https://nodes.mewapi.io/rpc/eth"
+            },
+            "MyCrypto":{
+                "name":"MyCrypto",
+                "url":"https://api.mycryptoapi.com/eth"
+            },
+            "CloudFlare":{
+                "name":"CloudFlare",
+                "url":"https://cloudflare-eth.com"
             }
         },
         "multicall": "0xeefba1e63905ef1d7acba5a8513c70307c1ce441",
@@ -280,9 +288,18 @@
                 "name": "ANKR",
                 "url": "https://rpc.ankr.com/bsc"
             },
-            "quickNode": {
-                "name": "QuickNode",
-                "url": "https://wandering-sparkling-shadow.bsc.quiknode.pro/00115b17f97c1f4c374ac309858015da1cab3e02/"
+
+            "publicRpcAnkr":{
+                "name": "Ankr BSC Public RPC",
+                "url": "https://bscrpc.com"
+            },
+            "publicRpcNodeReal":{
+                "name": "NodeReal BSC Public RPC",
+                "url": "https://binance.nodereal.io"
+            },
+            "MyEtherWallet":{
+                "name": "MyEtherWallet",
+                "url": "https://nodes.mewapi.io/rpc/bsc"
             }
         },
         "tokens": {
@@ -379,9 +396,9 @@
         "multicall": "0xb5b692a88bdfc81ca69dcb1d924f59f0413a602a",
         "echoContractAccount": "0xa75BF2815618872f155b7C4B0C81bF990f5245E4",
         "rpcUrls": {
-            "publicRpc": {
-                "name": "xDAI Chain RPC",
-                "url": "https://rpc.xdaichain.com/tornado"
+            "publicRpc":{
+                "name":"Gnosis Chain RPC",
+                "url":"https://rpc.gnosischain.com"
             }
         },
         "tokens": {
@@ -482,9 +499,13 @@
                 "name": "Infura",
                 "url": "https://polygon-mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
             },
-            "Alchemy": {
-                "name": "Alchemy",
-                "url": "https://polygon-mainnet.g.alchemy.com/v2/sKu2CqkvastVBuRmAyZ6_bX_Mm1osoIO"
+            "publicRpc1":{
+                "name":"publicRpc1",
+                "url":"https://polygon-rpc.com"
+            },
+            "publicRpc3":{
+                "name":"publicRpc3",
+                "url":"https://matic-mainnet.chainstacklabs.com"
             }
         },
         "tokens": {
@@ -581,13 +602,13 @@
         "multicall": "0x35A6Cdb2C9AD4a45112df4a04147EB07dFA01aB7",
         "echoContractAccount": "0xa75BF2815618872f155b7C4B0C81bF990f5245E4",
         "rpcUrls": {
-            "Alchemy": {
-                "name": "Alchemy",
-                "url": "https://opt-mainnet.g.alchemy.com/v2/ZJ-6r6kI5agyVBkPuFfU2pxcqkVUkImj"
-            },
             "Infura": {
                 "name": "Infura",
                 "url": "https://optimism-mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+            },
+            "Optimism":{
+                "name":"Optimism Public RPC",
+                "url":"https://mainnet.optimism.io"
             }
         },
         "tokens": {
@@ -662,10 +683,6 @@
             "Arbitrum": {
                 "name": "Arbitrum Public RPC",
                 "url": "https://arb1.arbitrum.io/rpc"
-            },
-            "Alchemy": {
-                "name": "Alchemy",
-                "url": "https://arb-mainnet.g.alchemy.com/v2/MYysfoC6ziJstN9Yti-x53Ap4pN0qEaq"
             },
             "Infura": {
                 "name": "Infura",
@@ -856,9 +873,9 @@
                 "name": "Infura",
                 "url": "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
             },
-            "Alchemy": {
-                "name": "Alchemy",
-                "url": "https://eth-goerli.alchemyapi.io/v2/sF1EhlYnfLdBn9xbxZTmXdV5e8lqPJdm"
+            "Prylabs":{
+                "name":"Prylabs",
+                "url":"https://goerli.prylabs.net"
             }
         },
         "tokens": {
@@ -1069,10 +1086,6 @@
             "BinancePublicRPC5": {
                 "name": "Public BNB Smart Chain Testnet RPC 5",
                 "url": "https://data-seed-prebsc-1-s3.binance.org:8545/"
-            },
-            "BinancePublicRPC6": {
-                "name": "Public BNB Smart Chain Testnet RPC 6",
-                "url": "https://data-seed-prebsc-2-s3.binance.org:8545/"
             }
         }
     }
