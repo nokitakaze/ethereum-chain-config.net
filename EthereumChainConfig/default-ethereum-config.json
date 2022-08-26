@@ -776,6 +776,10 @@
             "publicRpc": {
                 "name": "Avalanche RPC",
                 "url": "https://api.avax.network/ext/bc/C/rpc"
+            },
+            "ANKR": {
+                "name": "ANKR",
+                "url": "https://rpc.ankr.com/avalanche"
             }
         },
         "tokens": {
