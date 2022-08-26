@@ -6,7 +6,6 @@ using System.Numerics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Nethereum.Hex.HexTypes;
 using Nethereum.Web3;
 using NokitaKaze.EthereumChainConfig.Models;
 using Xunit;
